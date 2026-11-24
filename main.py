@@ -3,6 +3,9 @@
 Writes a fortune-cookie line for developers to /output/entry.txt.
 The prophecy is the oldest one in the trade: the bug that kept
 you up until 2 a.m. was a typo, and it was always a typo.
+
+Second revision: tightened the validation so the entry is
+checked as a single line as well as for length.
 """
 
 import os
@@ -18,6 +21,7 @@ def main() -> None:
     assert len(text) <= MAX_CHARS, (
         f"entry is {len(text)} characters, over the {MAX_CHARS} limit"
     )
+    assert "\n" not in text, "entry must be a single line"
     out_dir = os.environ.get("ENTRY_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
